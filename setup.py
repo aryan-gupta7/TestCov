@@ -2,32 +2,41 @@ from flask import Flask, render_template,request,redirect,url_for
 import sqlite3 as sql
 import psycopg2
 import os
-
+ 
 app = Flask(__name__)
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = "postgres://njubbkqvfqvzhz:6ff353f7f291cf986c29a7409b9f3daa53d76c9bf3248dabe5c9a481685433aa@ec2-54-152-40-168.compute-1.amazonaws.com:5432/deqs38ve28l8d6"
 symptoms=[90,70,59,40,35,31,27,20,15,10]
-
+ 
 def createtable():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur=con.cursor()
-    cur.execute("CREATE TABLE total_test(tests TEXT)")
+    table="""
+        CREATE TABLE total_tests (
+            tests TEXT
+        )
+        """
+    cur.execute(table)
     con.commit()
-
+    cur=con.cursor()
+    sqlite_insert_with_param = f"INSERT INTO total_tests(tests) VALUES ('0');"
+    cur.execute(sqlite_insert_with_param)
+    con.commit()
+ 
 def total_test():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur=con.cursor()
-    cur.execute("SELECT tests FROM total_test")
+    cur.execute("SELECT tests FROM total_tests")
     tests=cur.fetchall()
-    return int(tests)
-
+    return int(tests[0][0])
+ 
 def plus_one_test():
     tests = total_test()
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur=con.cursor()
-    sqlite_insert_with_param = f"UPDATE total_test SET tests = '{tests+1}' WHERE tests = 'tests';"
+    sqlite_insert_with_param = f"UPDATE total_tests SET tests = '{tests+1}' WHERE tests = '{tests}';"
     cur.execute(sqlite_insert_with_param)
     con.commit()
-
+ 
 def probablity(ans):
     percentage = 0
     for i in range(len(ans)):
@@ -36,41 +45,40 @@ def probablity(ans):
         else:
             percentage += 100 - symptoms[i]
     return percentage//len(ans)
-
+ 
 @app.route("/")
 def main():
     try:createtable()
     except:pass
     return redirect(url_for("home"))
-
-@app.route("/home", method=['POST','GET'])
+ 
+@app.route("/home", methods=['GET', 'POST'])
 def home():
     tests = "We have already done free "+str(total_test())+" succesfull tests!"
-
-    if request.method == "GET":
+    if request.method == 'GET':
         return render_template("home.html", test=tests)
-
+ 
     else:
         response = request.form['Response']
         if response == "About Us":
-            return redirect(url_for("AboutUs"))
+            return redirect(url_for("about"))
         elif response == "Test Now":
             return redirect(url_for("Testing"))
         return redirect(url_for("home"))
-
-@app.route("/AboutUs", method=['GET', 'POST'])
-def AboutUs():
+ 
+@app.route("/about", methods=['GET', 'POST'])
+def about():
     if request.method == "GET":
-        return render_template("Aboutus.html")
+        return render_template("about.html")
     
     else:
         return redirect(url_for("home"))
-
-@app.route("/Testing", method=['POST','GET'])
+ 
+@app.route("/Testing", methods=['GET', 'POST'])
 def Testing():
     if request.method == "GET":
         return render_template("test.html")
-
+ 
     else:
         questions = ['a','b','c','d','e','f','g','h','i','j']
         ans = []
@@ -81,23 +89,22 @@ def Testing():
                 return redirect(url_for("error"))
         plus_one_test()
         return redirect(url_for("result",percentage=probablity(ans)))
-
+ 
 @app.route("/Testing/error")
 def error():
     return render_template("error.html", code = "Select all fields")
-
-@app.route("/Testing/result/<percentage>", method=['POST','GET'])
+ 
+@app.route("/Testing/result/<percentage>", methods=['GET', 'POST'])
 def result(percentage):
     if request.method == "GET":
         return render_template("result.html", probab=percentage)
-
     else:
         response = request.form['Response']
         if response == "About Us":
-            return redirect(url_for("AboutUs"))
+            return redirect(url_for("about"))
         elif response == "Test Again":
             return redirect(url_for("Testing"))
         return redirect(url_for("home"))
-
+ 
 if __name__ == "__main__":
     app.run()
