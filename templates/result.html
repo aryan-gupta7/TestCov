@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Result</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/png">
 </head>
 <body>
-    <h1>TestCov</h1>
-    <h2>The probablity That you can be corona positive is {{ probab }}%</h2>
-    <form class = "box" method="post" action="#">
-        <input type="submit" name="Response" value="Test Again">
-        <input type="submit" name="Response" value="About Us">
+    <h1 class="heading">TestCov</h1>
+    <h2 class="h2">There are {{ probab }}% chances that you can be corona positive.</h2>
+    <form class="box" method="post" action="#">
+        <input class="input-button" type="submit" name="Response" value="Test Again">
+        <input class="input-button" type="submit" name="Response" value="About Us">
     </form>
 </body>
 </html>
