@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
+
+body
+{
+    background: url('\\static\\bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 0px;
+    height: 2700px;
+}
+
+.heading
+{
+    color: rgb(127, 117, 219);
+    text-align: center;
+    font-size: 80px;
+    font-family: 'Comfortaa', cursive;
+    margin: 20px;
+
+}
+
+.h2{
+    padding: 3px 147px;
+    color: rgb(117, 117, 219);
+    text-align: center;
+    font-size: 35px;
+    font-weight: 600;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.test
+{
+    color: rgb(117, 117, 219);
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Quicksand', sans-serif;
+    margin-bottom: 50px;
+    font-style: italic;
+}
+
+.box
+{
+    display: flex;
+    justify-content: center;
+}
+
+.input-button
+{
+    margin: 10px 30px;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    border: none;
+    background:rgb(117, 117, 219);
+    font-weight: 100;
+    padding: 20px;
+    text-transform: uppercase;
+    border-radius: 6px;
+    display: block;
+    transition: all 0.3s ease 0s;
+}
+
+.input-button:hover
+{
+    color: #404040 !important;
+    font-weight: 700 !important;
+    /* letter-spacing: 3px; */
+    background: #FFF;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
+    transition: all 0.3s ease 0s;
+    -webkit-transform: scale(1.175, 1.175);
+    transform: scale(1.175, 1.175);
+}
+
+.input-button:focus
+{
+    outline: none;
+}
+.ques-box
+{
+    box-sizing: border-box;
+    width: 500px;
+    background-color: rgba(127, 117, 219,.4);
+    height: 200px;
+    margin: 10px auto;
+    border-radius: 40px;
+    text-align: center;
+    padding: 30px;
+}
+
+.ques
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.question
+{
+    margin: 10px auto;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    width: 223px;
+    text-align: left;
+}
+
+.options
+{
+    display: block;
+    text-align: left;
+    width: 200px;
+    margin: 8px auto;
+    font-size: 18px;
+    font-family: 'Quicksand', sans-serif;
+    color: #fff;
+}
