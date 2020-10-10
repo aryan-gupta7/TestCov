@@ -1,55 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing</title>
+    <title>TestCov &centerdot; Testing</title>
+    <link rel="shortcut icon" href="/static/icon.png" type="image/png">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-    <h1>TestCov</h1>
-    <p>Corona test at home just by tick-marks</p>
-    <form class="box" method = "post" action="#">
-        Do you have fever?
-        <br>YES<input type="radio" name="a" value ="YES">
-        NO<input type="radio" name="a" value ="NO"></br>
+    <h1 class="heading">TestCov</h1>
+    <p class="h2" style="font-weight: 100; padding: 30px;">Answer these few questions and find your risk probability
+        from <span style="font-weight: 900;">COVID-19</span>.</p>
+    <form class="ques" method="post" action="#">
 
-        Do you feel extremely tired or fatigued?
-        <br>YES<input type="radio" name="b" value ="YES">
-        NO<input type="radio" name="b" value ="NO"></br>
+        <div class="ques-box">
+            <p class="question">Do you have fever?</p>
+            <label class="options">
+                <input type="radio" name="a" value="YES">
+                YES
+            </label>
 
-        Do you have dry cough?
-        <br>YES<input type="radio" name="c" value ="YES">
-        NO<input type="radio" name="c" value ="NO"></br>
+            <label class="options">
+                <input type="radio" name="a" value="NO">
+                NO
+            </label>
+        </div>
 
-        Do you have lossed appetite(don't feel hungry)?
-        <br>YES<input type="radio" name="d" value ="YES">
-        NO<input type="radio" name="d" value ="NO"></br>
+        <div class="ques-box">
+            <p class="question">Do you feel extremely tired or fatigued?</p>
+            <label class="options">
+                <input type="radio" name="b" value="YES">
+                YES
+            </label>
 
-        Do you have body-aches?
-        <br>YES<input type="radio" name="e" value ="YES">
-        NO<input type="radio" name="e" value ="NO"></br>
+            <label class="options">
+                <input type="radio" name="b" value="NO">
+                NO
+            </label>
+        </div>
 
-        Do you feel shortness or breath?
-        <br>YES<input type="radio" name="f" value ="YES">
-        NO<input type="radio" name="f" value ="NO"></br>
+        <div class="ques-box">
+            <p class="question">Do you have dry cough?</p>
+            <label class="options">
+                <input type="radio" name="c" value="YES">
+                YES
+            </label>
 
-        Does mucus or phlegm comes from your nose?
-        <br>YES<input type="radio" name="g" value ="YES">
-        NO<input type="radio" name="g" value ="NO"></br>
+            <label class="options">
+                <input type="radio" name="c" value="NO">
+                NO
+            </label>
+        </div>
 
-        Do you lost sense of smelling?
-        <br>YES<input type="radio" name="h" value ="YES">
-        NO<input type="radio" name="h" value ="NO"></br>
+        <div class="ques-box">
+            <p class="question">Do you have lossed appetite(don't feel hungry)?</p>
+            <label class="options">
+                <input type="radio" name="d" value="YES">
+                YES
+            </label>
 
-        Do you have constant pain in chest?
-        <br>YES<input type="radio" name="i" value ="YES">
-        NO<input type="radio" name="i" value ="NO"></br>
+            <label class="options">
+                <input type="radio" name="d" value="NO">
+                NO
+            </label>
+        </div>
 
-        Do you have diarrhea?
-        <br>YES<input type="radio" name="j" value ="YES">
-        NO<input type="radio" name="j" value ="NO"></br>
+        <div class="ques-box">
+            <p class="question">Do you have body-aches?</p>
+            <label class="options">
+                <input type="radio" name="e" value="YES">
+                YES
+            </label>
 
-        <input type="submit" name="z" value="submit">
+            <label class="options">
+                <input type="radio" name="e" value="NO">
+                NO
+            </label>
+        </div>
+
+        <div class="ques-box">
+            <p class="question">Do you feel shortness or breath?</p>
+            <label class="options">
+                <input type="radio" name="f" value="YES">
+                YES
+            </label>
+
+            <label class="options">
+                <input type="radio" name="f" value="NO">
+                NO
+            </label>
+
+        </div>
+        <div class="ques-box">
+            <p class="question">Does mucus or phlegm comes from your nose?</p>
+            <label class="options">
+                <input type="radio" name="g" value="YES">
+                YES
+            </label>
+
+            <label class="options">
+                <input type="radio" name="g" value="NO">
+                NO
+            </label>
+        </div>
+
+        <div class="ques-box">
+            <p class="question">Do you lost sense of smelling?</p>
+            <label class="options">
+                <input type="radio" name="h" value="YES">
+                YES
+            </label>
+
+            <label class="options">
+                <input type="radio" name="h" value="NO">
+                NO
+            </label>
+        </div>
+
+        <div class="ques-box">
+            <p class="question">Do you have constant pain in chest?</p>
+            <label class="options">
+                <input type="radio" name="i" value="YES">
+                YES
+            </label>
+
+            <label class="options">
+                <input type="radio" name="i" value="NO">
+                NO
+            </label>
+        </div>
+
+        <div class="ques-box">
+
+            <p class="question">Do you have diarrhea?</p>
+
+            <label class="options">
+                <input type="radio" name="j" value="YES">
+                YES
+            </label>
+
+            <label class="options">
+                <input type="radio" name="j" value="NO">
+                NO
+            </label>
+
+        </div>
+
+        <input type="submit" class="input-button" style="width: 200px; letter-spacing: 3px; margin: 20px auto;" name="z" value="submit">
     </form>
 </body>
+
 </html>
