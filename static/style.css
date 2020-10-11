@@ -10,7 +10,7 @@ body
     -o-background-size: cover;
     background-size: cover;
     margin: 0px;
-    height: 2700px;
+
 }
 
 .heading
@@ -24,7 +24,9 @@ body
 }
 
 .h2{
-    padding: 3px 147px;
+    padding: 3px 20px;
+    width: auto;
+    max-width: 1200px;
     color: rgb(117, 117, 219);
     text-align: center;
     font-size: 35px;
@@ -85,7 +87,7 @@ body
 .ques-box
 {
     box-sizing: border-box;
-    width: 500px;
+    width: 25rem;
     background-color: rgba(127, 117, 219,.4);
     height: 200px;
     margin: 10px auto;
