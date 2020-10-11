@@ -22,6 +22,7 @@ def createtable():
     cur.execute(sqlite_insert_with_param)
     con.commit()
 
+
 def total_test():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur=con.cursor()
@@ -76,9 +77,19 @@ def AboutUs():
 
 @app.route("/Testing", methods=['GET', 'POST'])
 def Testing():
+    questions = {"a":"Do you have fever?",
+    "b":"Do you feel extremely tired or fatigued?",
+    "c":"Do you have dry cough?",
+    "d":"Do you have lossed appetite(don't feel hungry)?",
+    "e":"Do you have body-aches?",
+    "f":"Do you feel shortness or breath?",
+    "g":"Does mucus or phlegm comes from your nose?",
+    "h":"Do you lost sense of smelling?",
+    "i":"Do you have constant pain in chest?",
+    "j":"Do you have diarrhea?"
+    }
     if request.method == "GET":
-        return render_template("test.html")
-
+        return render_template("test.html",questions = questions)
     else:
         questions = ['a','b','c','d','e','f','g','h','i','j']
         ans = []
@@ -87,6 +98,7 @@ def Testing():
                 ans.append(request.form[question])
             except:
                 return redirect(url_for("error"))
+        
         plus_one_test()
         return redirect(url_for("result",percentage=probablity(ans)))
 
