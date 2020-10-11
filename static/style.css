@@ -24,8 +24,8 @@ body
 }
 
 .h2{
-    padding: 3px 20px;
     width: auto;
+    margin: auto;
     max-width: 1200px;
     color: rgb(117, 117, 219);
     text-align: center;
@@ -122,4 +122,20 @@ body
     font-size: 18px;
     font-family: 'Quicksand', sans-serif;
     color: #fff;
+}
+.text-input{
+    height: 30px;
+    width: 211px;
+    border: 1px solid rgb(117, 117, 219);
+    border-radius: 4px;
+    padding: 3px;
+    font-family: 'Quicksand', sans-serif;
+    color: black;
+    font-weight: 600;
+    font-size: 20px;
+
+}
+.text-input:focus
+{
+    outline: none;
 }
