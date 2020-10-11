@@ -4,7 +4,7 @@ import psycopg2
 import os
 
 app = Flask(__name__)
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = postgres://hmofxsxuinwfea:9158ba7199156daf28c6e8a5480758c7791d7ca189ec8be5023aa9799bd6fed0@ec2-34-233-43-35.compute-1.amazonaws.com:5432/dbumbobf17so04
 symptoms=[90,70,59,40,35,31,27,20,15,10]
 
 def createtable():
