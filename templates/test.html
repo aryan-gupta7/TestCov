@@ -18,14 +18,14 @@
             
             <label>
                 <p class="question">Enter your name</p>
-                <input class="text-input" aria-placeholder="Enter your name here" placeholder="Your name" type="text" name="name">
+                <input class="text-input" aria-placeholder="Enter your name here" placeholder="Your name" type="text" name="name" required>
             </label>
         </div>
         {% for question in questions.items() %}
         <div class="ques-box">
             <p class="question">{{ question[1] }}</p>
             <label class="options">
-                <input type="radio" name={{question[0]}} value="YES">
+                <input type="radio" name={{question[0]}} value="YES" required>
                 YES
             </label>
             <label class="options">
