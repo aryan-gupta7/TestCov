@@ -102,10 +102,6 @@ def Testing():
         plus_one_test()
         return redirect(url_for("result",percentage=probablity(ans)))
 
-@app.route("/Testing/error")
-def error():
-    return render_template("error.html", code = "Select all fields")
-
 @app.route("/Testing/result/<percentage>", methods=['GET', 'POST'])
 def result(percentage):
     if request.method == "GET":
