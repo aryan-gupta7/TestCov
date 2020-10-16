@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
 import psycopg2
 import os
+import smtplib
 
 app = Flask(__name__)
 DATABASE_URL = os.environ['DATABASE_URL']
@@ -90,6 +91,13 @@ def probablity(ans):
         else:
             percentage += min(symptoms[i],100-symptoms[i])
     return percentage//len(ans)
+
+def send_mail(to,subject,message):
+        s = smtplib.SMTP("smtp.gmail.com", 587)
+        s.starttls()
+        s.login(os.environ['ID'], os.environ['PASSWORD'])
+        s.sendmail(os.environ['ID'], to, f"Subject: {sub}\n\n{msg}")
+        s.quit()
 
 @app.route('/')
 def main():
@@ -198,6 +206,7 @@ def ask():
         email = request.form['email']
         question = request.form['question']
         enter_data(name,age,email,question,"Not answered")
+        send_mail({os.environ['ARYAN_ID']},f"A question is asked by{name}",f"The question asked is {question}. Answer this as soon as possible.")
         return redirect(url_for('asked'))
 
 
