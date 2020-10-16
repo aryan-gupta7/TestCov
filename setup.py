@@ -214,24 +214,27 @@ def asked():
         else:
             return redirect(url_for('asked'))
 
-@app.route("/answer", methods = ['GET','POST'])
-def answer():
-    ques_ans = retrieve()
-    questions = []
-    for item in ques_ans:
-        if item[4] == "Not answered":
-            questions.append(item)
-    if len(questions) == 0:
-        questions.append(["NONE","NONE","NONE","NONE","NONE"])
-    if request.method == 'GET':
-        return render_template("ans.html",ques = questions[0])
+@app.route("/answer/<password>", methods = ['GET','POST'])
+def answer(password):
+    if password == os.environ['PASSWORD']:
+        ques_ans = retrieve()
+        questions = []
+        for item in ques_ans:
+            if item[4] == "Not answered":
+                questions.append(item)
+        if len(questions) == 0:
+            questions.append(["NONE","NONE","NONE","NONE","NONE"])
+        if request.method == 'GET':
+            return render_template("ans.html",ques = questions[0])
+        else:
+            answer = request.form['answer']
+            if answer == "DELETE" or answer == "-d":
+                delete(questions[0][3])
+            elif answer != "SKIP" and answer != "-s":
+                update(questions[0][3], answer)
+            return redirect(url_for("answer"))
     else:
-        answer = request.form['answer']
-        if answer == "DELETE" or answer == "-d":
-            delete(questions[0][3])
-        elif answer != "SKIP" and answer != "-s":
-            update(questions[0][3], answer)
-        return redirect(url_for("answer"))
+        return redirect(url_for('home'))
 
 @app.route('/<anything>')
 def not_found(anything):
