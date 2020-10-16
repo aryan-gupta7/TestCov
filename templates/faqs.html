@@ -12,7 +12,7 @@
     <h1 class="heading">TestCov</h1>
     <h2 class="h2" style="margin: 30px auto;">Frequently Asked Question(s)</h2>
     {% if num_question > 5 %}
-    {% set questions = questions[:5] %}
+    {% set questions = questions[::-1][:5] %}
     {% endif %}
     {% for question in questions %}
     <div class="ques-box" style="height: auto;">
