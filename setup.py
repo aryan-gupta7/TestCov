@@ -179,7 +179,7 @@ def faqs():
         questions.append((item[0],item[3],item[4]))
 
     if request.method == 'GET':
-        return render_template('faqs.html',questions=questions,num_question=len(questions))
+        return render_template('faqs.html',questions=questions[::-1])
     else:
         response = request.form['Response']
         if response == "Ask a question":
