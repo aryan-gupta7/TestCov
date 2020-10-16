@@ -1,13 +1,12 @@
-from flask import Flask, render_template,request,redirect,url_for
-import sqlite3 as sql
+from flask import Flask, request, render_template, redirect, url_for
 import psycopg2
 import os
 
 app = Flask(__name__)
 DATABASE_URL = os.environ['DATABASE_URL']
-symptoms=[90,70,59,40,35,31,27,20,15,10]
 
-def createtable():
+names = []
+def createtable_tests():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
     cur=con.cursor()
     table="""
@@ -22,6 +21,19 @@ def createtable():
     cur.execute(sqlite_insert_with_param)
     con.commit()
 
+def update(ques, ans):
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur=con.cursor()
+    sqlite_insert_with_param = f"UPDATE questions_answers SET answer = '{ans}' WHERE question = '{ques}';"
+    cur.execute(sqlite_insert_with_param)
+    con.commit()
+
+def delete(ques):
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur=con.cursor()
+    sqlite_insert_with_param = f"DELETE FROM questions_answers WHERE question = '{ques}';"
+    cur.execute(sqlite_insert_with_param)
+    con.commit()
 
 def total_test():
     con = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -38,7 +50,39 @@ def plus_one_test():
     cur.execute(sqlite_insert_with_param)
     con.commit()
 
+def createtable():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur=con.cursor()
+    table="""
+        CREATE TABLE questions_answers (
+            name TEXT,
+            age TEXT,
+            email TEXT,
+            question TEXT,
+            answer TEXT
+        )
+        """
+    cur.execute(table)
+    con.commit()
+
+def retrieve():
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    cur.execute("SELECT * FROM questions_answers")
+    users = cur.fetchall()
+    con.close()
+    return users
+
+def enter_data(name,age,email,ques,ans):
+    con = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cur = con.cursor()
+    sqlite_insert_with_param = f"INSERT INTO questions_answers(name,age,email,question,answer) VALUES ('{name}','{age}','{email}','{ques}','{ans}');"
+    cur.execute(sqlite_insert_with_param)
+    con.commit()
+    con.close()
+
 def probablity(ans):
+    symptoms=[90,70,59,40,35,31,27,20,15,10]
     percentage = 0
     for i in range(len(ans)):
         if ans[i] == "YES":
@@ -47,36 +91,37 @@ def probablity(ans):
             percentage += min(symptoms[i],100-symptoms[i])
     return percentage//len(ans)
 
-@app.route("/")
+@app.route('/')
 def main():
-    try:createtable()
-    except:pass
-    return redirect(url_for("home"))
+    try:
+        createtable() 
+    except:
+        pass
+    try:
+        createtable_tests() 
+    except:
+        pass
+    return redirect(url_for('home'))
 
-@app.route("/home", methods=['GET', 'POST'])
+@app.route('/home',methods=["GET","POST"])
 def home():
-    tests = "We have already done free "+str(total_test())+" succesfull tests!"
-    if request.method == 'GET':
-        return render_template("home.html", test=tests)
-
-    else:
-        response = request.form['Response']
-        if response == "About Us":
-            return redirect(url_for("AboutUs"))
-        elif response == "Test Now":
-            return redirect(url_for("Testing"))
-        return redirect(url_for("home"))
-
-@app.route("/AboutUs", methods=['GET', 'POST'])
-def AboutUs():
+    tests_done = total_test()
+    text = f"We have already done {tests_done} succesfull tests for free."
     if request.method == "GET":
-        return render_template("Aboutus.html")
-    
+        return render_template('home.html',test=text)
     else:
-        return redirect(url_for("home"))
+        response = request.form["Response"]
+        if response == "Test Now":
+            return redirect(url_for('test'))
+        elif response == "About Us":
+            return redirect(url_for('about'))
+        elif response == "FAQ(s)":
+            return redirect(url_for('faqs'))
+        else:
+            return render_template('home.html',test=text)
 
-@app.route("/Testing", methods=['GET', 'POST'])
-def Testing():
+@app.route('/test',methods=["GET","POST"])
+def test():
     questions = {"a":"Do you have fever?",
     "b":"Do you feel extremely tired or fatigued?",
     "c":"Do you have dry cough?",
@@ -88,31 +133,109 @@ def Testing():
     "i":"Do you have constant pain in chest?",
     "j":"Do you have diarrhea?"
     }
-    if request.method == "GET":
-        return render_template("test.html",questions = questions)
+    if request.method == 'GET':
+        return render_template('test.html',questions=questions)
     else:
+        name = request.form['name']
         questions = ['a','b','c','d','e','f','g','h','i','j']
         ans = []
         for question in questions:
-            try:
-                ans.append(request.form[question])
-            except:
-                return redirect(url_for("error"))
-        
+            ans.append(request.form[question])
         plus_one_test()
-        return redirect(url_for("result",percentage=probablity(ans)))
+        names.append(name)
+        return redirect(url_for('result',percentage=probablity(ans)))
 
-@app.route("/Testing/result/<percentage>", methods=['GET', 'POST'])
+@app.route('/test/result/<percentage>',methods=['GET','POST'])
 def result(percentage):
     if request.method == "GET":
         return render_template("result.html", probab=percentage)
     else:
         response = request.form['Response']
-        if response == "About Us":
-            return redirect(url_for("AboutUs"))
-        elif response == "Test Again":
-            return redirect(url_for("Testing"))
-        return redirect(url_for("home"))
+        if response == 'Test Again':
+            return redirect(url_for('test'))
+        elif response == 'About Us':
+            return redirect(url_for('about'))
+        elif response == 'FAQ(s)':
+            return redirect(url_for('faqs'))
+
+
+@app.route('/about',methods=['GET','POST'])
+def about():
+    if request.method == 'GET':
+        return render_template('Aboutus.html')
+    else:
+        response = request.form['Response']
+        if response == "Back to Home Page":
+            return redirect(url_for("home"))
+        else:
+            return redirect(url_for('about'))
+
+
+@app.route('/FAQs',methods=['GET','POST'])
+def faqs():
+    ques_ans = retrieve()
+    questions = []
+    for item in ques_ans:
+        questions.append((item[0],item[3],item[4]))
+
+    if request.method == 'GET':
+        return render_template('faqs.html',questions=questions,num_question=len(questions))
+    else:
+        response = request.form['Response']
+        if response == "Ask a question":
+            return redirect(url_for('ask'))
+        else:
+            return redirect(url_for('faqs'))
+
+
+@app.route('/ask',methods=['GET','POST'])
+def ask():
+    if request.method == 'GET':
+        return render_template('ask.html')
+    else:
+        name = request.form['name']
+        age = request.form['age']
+        email = request.form['email']
+        question = request.form['question']
+        enter_data(name,age,email,question,"Not answered")
+        return redirect(url_for('asked'))
+
+
+@app.route('/asked',methods=['GET','POST'])
+def asked():
+    if request.method == 'GET':
+        return render_template('asked.html')
+    else:
+        response = request.form['Response']
+        if response == 'Back to FAQ(s)':
+            return redirect(url_for('faqs'))
+        elif response == 'Back to Home Page':
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('asked'))
+
+@app.route("/answer", methods = ['GET','POST'])
+def answer():
+    ques_ans = retrieve()
+    questions = []
+    for item in ques_ans:
+        if item[4] == "Not answered":
+            questions.append(item)
+    if len(questions) == 0:
+        questions.append(["NONE","NONE","NONE","NONE","NONE"])
+    if request.method == 'GET':
+        return render_template("ans.html",ques = questions[0])
+    else:
+        answer = request.form['answer']
+        if answer == "DELETE" or answer == "-d":
+            delete(questions[0][3])
+        elif answer != "SKIP" and answer != "-s":
+            update(questions[0][3], answer)
+        return redirect(url_for("answer"))
+
+@app.route('/<anything>')
+def not_found(anything):
+    return render_template('404_not_found.html',anything=anything)
 
 if __name__ == "__main__":
     app.run()
