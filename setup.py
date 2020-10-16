@@ -244,7 +244,7 @@ def answer(password):
                 enter_data(questions[0][0],questions[0][1],questions[0][2],questions[0][3],questions[0][4])
             else:
                 update(questions[0][3], answer)
-            return redirect(url_for("answer"))
+            return redirect(url_for("answer",password=os.environ['PASSWORD']))
     else:
         return redirect(url_for('home'))
 
