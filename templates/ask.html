@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestCov &centerdot; Ask a question</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/png">
+    <style>
+        .ques-box {
+            height: auto;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="heading">TestCov</h1>
+    <h2 class="h2" style="margin: 30px auto;">Ask a Question</h2>
+    <form action="#" method="post">
+
+        <div class="ques-box">
+            <label>
+                <p class="question"> Enter your full name: </p>
+                <input type="text" name="name" placeholder="Your name" class="text-input" required>
+            </label>
+        </div>
+
+        <div class="ques-box">
+            <label>
+                <p class="question">Age: </p>
+                <input class="text-input" type="number" name="age" min="1" max="100" required>
+            </label>
+        </div>
+
+        <div class="ques-box">
+            <label>
+                <p class="question">Email address:</p>
+                <input class="text-input" type="email" name="email" required>
+            </label>
+        </div>
+
+        <div class="ques-box">
+
+            <label>
+                <p class="question">Ask your question</p>
+                <textarea rows='10'cols='40'name="question" class="text-input"required></textarea>
+            </label>
+        </div>
+        <div style="display: flex; justify-content: centre;">
+            <input type="submit" class="input-button" style="margin: 30px auto;"value="Ask">
+        </div>
+        </form>
+</body>
+
+</html>

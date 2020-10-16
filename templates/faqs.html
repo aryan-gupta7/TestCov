@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="google-site-verification" content="9s69KIlM4OEX3-kresajeu-I23An8Sz6z2nwnvM0qk0"/> -->
+    <title>TestCov &centerdot; FAQ(s)</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/png">
+</head>
+<body>
+    <h1 class="heading">TestCov</h1>
+    <h2 class="h2" style="margin: 30px auto;">Frequently Asked Question(s)</h2>
+    {% if num_question < 1 %}
+    <h2 class="h2" style="margin: 30px auto;">No Questions asked yet.</h2>
+    <form action="#"method='post'>
+        <input type="submit" name="Response" class="input-button" style="width: auto;margin: auto;" value="Ask a question">
+    </form>
+    {% elif num_question > 0 %}
+    <!-- {% set questions = questions[:5] %} -->
+    <form action="#"method='post'>
+        <input type="submit" name="Response" class="input-button" style="width: auto;margin: auto;" value="Ask a question">
+    </form>
+    {% for question in questions %}
+    <div class="ques-box" style="height: auto;">
+        <p class="question" style="text-align: center;">{{ question[1] }} &#187;</p>
+        <p class="answer">{{ question[2] }}</p>
+        <p class="asked-by">Asked by - {{ question[0] }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
+</body>
+</html>

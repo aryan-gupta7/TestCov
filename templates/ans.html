@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestCov &centerdot; Answer</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+</head>
+<body>
+    <h1 class="heading">TestCov</h1>
+    {% for item in ques %}
+    <p class="h2">{{item}}</p>
+    {% endfor %}
+    <form class="box" style="flex-direction: column;" action = "#" method = "post">
+        <div class="ques-box" style="height: auto;">
+            <input type="text" class="text-input"name="answer" id="ans">
+        </div>
+        <input class="input-button" style="width: 100px;margin: auto;" type="submit" value="submit">
+    </form>
+</body>
+</html>
