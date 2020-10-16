@@ -54,6 +54,8 @@ body
 .input-button
 {
     margin: 30px;
+    width: auto;
+    min-width: 7em;
     color: #fff;
     font-size: 20px;
     font-family: 'Quicksand', sans-serif;
@@ -74,8 +76,8 @@ body
     font-weight: 700 !important;
     /* letter-spacing: 3px; */
     background: #FFF;
-    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
-    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.8);
     transition: all 0.3s ease 0s;
     -webkit-transform: scale(1.175, 1.175);
     transform: scale(1.175, 1.175);
@@ -92,7 +94,7 @@ body
     background-color: rgba(127, 117, 219,.79);
     height: 200px;
     margin: 10px auto;
-    border-radius: 40px;
+    border-radius: 30px;
     text-align: center;
     padding: 30px;
 }
@@ -139,4 +141,68 @@ body
 .text-input:focus
 {
     outline: none;
+}
+.answer{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 22px;
+    color: white;
+    display: none;
+    transition: 5s;
+}
+
+.ques-box:hover .answer{
+    display: block;
+}
+
+.asked-by {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    color: white;
+}
+
+
+/* CSS for mobile-device */
+@media screen and (max-device-width:480px){
+    .heading{
+        font-size: 6vh;
+    }
+    .h2{
+        width: auto;
+        text-align: center;
+        padding: 0;
+        font-size: 3vh;
+    }
+    .box{
+        flex-direction: column;
+        align-items: center;
+    }
+    .input-button{
+        margin: 2vh;
+        font-size: 1rem;
+    }
+    .test{
+        margin: 2vh;
+        font-size: 3vh;
+    }
+    .ques-box{
+        width: auto;   
+        margin: 2vh 5px;
+    }
+}
+
+/* CSS of Tablet devices in both orientation */
+@media screen and (max-device-width:1024px) and (min-device-width:481px){
+    .heading {
+        font-size: 10vh;
+    }
+    .h2{
+        font-size: 3vh;
+    }
+    .test{
+        font-size: 2vh;
+    }
+}
+
+@media screen and (max-device-width:1024px) and (min-device-width:481) and (orientation:landscape){
+
 }
