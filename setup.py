@@ -229,8 +229,11 @@ def answer(password):
         else:
             answer = request.form['answer']
             if answer == "DELETE" or answer == "-d":
+                    delete(questions[0][3])
+            elif answer == "SKIP" and answer == "-s":
                 delete(questions[0][3])
-            elif answer != "SKIP" and answer != "-s":
+                enter_data(questions[0][0],questions[0][1],questions[0][2],questions[0][3],questions[0][4])
+            else:
                 update(questions[0][3], answer)
             return redirect(url_for("answer"))
     else:
