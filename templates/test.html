@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/static/icon.png" type="image/png">
 </head>
 
-<body>
+<body style="height: 400vh;">
     <h1 class="heading">TestCov</h1>
     <p class="h2" style="font-weight: 100;">Answer these few questions and find your risk probability from <span style="font-weight: 900;">Covid-19</span>.</p>
     <form action="#" method="POST" class="ques">
@@ -34,9 +34,12 @@
             </label>
         </div>
         {% endfor %}
-        <input type="submit" class="input-button" style="width: 200px; letter-spacing: 3px; margin: 20px auto;" name="z" value="submit" >
-
+        <div class="buttons" style="display: flex;justify-content: center;flex-direction: row;">
+            <input type="submit" class="input-button" style="" name="z" value="submit" >
+            <input type="reset"  class="input-button" value="Reset">
+        </div>
     </form>
 </body>
 
 </html>
+
