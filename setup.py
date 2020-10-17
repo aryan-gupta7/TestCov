@@ -266,4 +266,4 @@ def not_found(anything):
     return render_template('404_not_found.html',anything=anything)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
