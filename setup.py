@@ -1,10 +1,15 @@
 from flask import Flask, request, render_template, redirect, url_for
 import psycopg2
 import os
-# import smtplib
+import smtplib
 
 app = Flask(__name__)
+
 DATABASE_URL = os.environ['DATABASE_URL']
+GMAIL_ID = os.environ['ID']
+PASSWORD = os.environ['PASSWORD']
+ARYAN_ID = os.environ['ARYAN_ID']
+AKSHAT_ID = os.environ['AKSHAT_ID']
 
 names = []
 def createtable_tests():
@@ -92,12 +97,18 @@ def probablity(ans):
             percentage += min(symptoms[i],100-symptoms[i])
     return percentage//len(ans)
 
-# def send_mail(to,subject,message):
-#         s = smtplib.SMTP("smtp.gmail.com", 587)
-#         s.starttls()
-#         s.login(os.environ['ID'], os.environ['PASSWORD'])
-#         s.sendmail(os.environ['ID'], to, f"Subject: {sub}\n\n{msg}")
-#         s.quit()
+def send_mail(to,subject,message):
+        s = smtplib.SMTP("smtp.gmail.com", 587)
+        s.starttls()
+        try:
+            s.login(GMAIL_ID, PASSWORD)
+        except Exception as e:
+            print(f"Couldn't login. {e}")
+        try:
+            s.sendmail(GMAIL_ID, to, f"Subject: {subject}\n\n{message}")
+        except:
+            pass
+        s.quit()
 
 @app.route('/')
 def main():
@@ -206,7 +217,8 @@ def ask():
         email = request.form['email']
         question = request.form['question']
         enter_data(name,age,email,question,"Not answered")
-#         send_mail({os.environ['ARYAN_ID']},f"A question is asked by{name}",f"The question asked is {question}. Answer this as soon as possible.")
+        send_mail(AKSHAT_ID,f"A question is asked by {name}",f"The question asked is --\n {question}.\n Answer this as soon as possible.")
+        send_mail(ARYAN_ID,f"A question is asked by {name}",f"The question asked is --\n {question}.\n Answer this as soon as possible.")
         return redirect(url_for('asked'))
 
 
@@ -225,26 +237,27 @@ def asked():
 
 @app.route("/answer/<password>", methods = ['GET','POST'])
 def answer(password):
-    if password == os.environ['PASSWORD']:
+    if password == PASSWORD:
         ques_ans = retrieve()
         questions = []
         for item in ques_ans:
             if item[4] == "Not answered":
                 questions.append(item)
         if len(questions) == 0:
-            questions.append(["NONE","NONE","NONE","NONE","NONE"])
+            questions.append(["NO QUESTIONS UNANSWERED"])
         if request.method == 'GET':
-            return render_template("ans.html",ques = questions[0])
+            return render_template("ans.html",ques=questions[0])
         else:
             answer = request.form['answer']
             if answer == "DELETE" or answer == "-d":
-                    delete(questions[0][3])
-            elif answer == "SKIP" and answer == "-s":
+                delete(questions[0][3])
+            elif answer == "SKIP" or answer == "-s":
                 delete(questions[0][3])
                 enter_data(questions[0][0],questions[0][1],questions[0][2],questions[0][3],questions[0][4])
             else:
                 update(questions[0][3], answer)
-            return redirect(url_for("answer",password=os.environ['PASSWORD']))
+                send_mail(questions[0][2],"Answer for your question by TestCov",f"Hi {questions[0][0]},\nWe are Aryan and Akshat from TestCov, your question was {questions[0][3]}\nAnd, Your answer for the question is - \n{answer}")
+            return redirect(url_for("answer",password=PASSWORD))
     else:
         return redirect(url_for('home'))
 
@@ -253,4 +266,4 @@ def not_found(anything):
     return render_template('404_not_found.html',anything=anything)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
