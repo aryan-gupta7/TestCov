@@ -261,9 +261,9 @@ def answer(password):
     else:
         return redirect(url_for('home'))
 
-@app.route('/<anything>')
-def not_found(anything):
-    return render_template('404_not_found.html',anything=anything)
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('404_not_found.html'), 404
 
 if __name__ == "__main__":
     app.run()
