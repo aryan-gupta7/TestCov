@@ -88,13 +88,11 @@ def enter_data(name,age,email,ques,ans):
     con.close()
 
 def probablity(ans):
-    symptoms=[90,70,59,40,35,31,27,20,15,10]
+    symptoms=[40, 80, 45, 40, 55, 41, 10, 15, 35, 30]
     percentage = 0
     for i in range(len(ans)):
         if ans[i] == "YES":
-            percentage += max(100 - symptoms[i],symptoms[i])
-        else:
-            percentage += min(symptoms[i],100-symptoms[i])
+            percentage += 100 - symptoms[i]
     return percentage//len(ans)
 
 def send_mail(to,subject,message):
